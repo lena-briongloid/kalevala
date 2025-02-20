@@ -1,0 +1,236 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+html {
+    height: 100%;
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+a {
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.blink-image {
+    position: fixed;
+    top: 87.5%;
+    right: 12.5%;
+    transform: translate(50%, -50%);
+    z-index: 1000;
+    width: 70px;
+    opacity: 0;
+    animation: blink 2s infinite ease-in-out;
+    animation-delay: 2s;
+}
+
+.page-number {
+    position: fixed;
+    display: none;
+    top: 87.5%;
+    right: 5%;
+    font-family: "Diphylleia";
+    font-size: calc(9px + 1vw);
+    color: #FFFFFF;
+    text-shadow: 
+    -1px -1px 0 #000000,
+    1px -1px 0 #000000,
+    -1px 1px 0 #000000,
+    1px 1px 0 #000000;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.blur-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('your-image.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px);
+  transform: scale(1.02);
+  z-index: 1;
+}
+
+.text-container {
+    position: absolute;
+    z-index: 2;
+    height: 100vh;
+    width: 100%;
+    line-height: 200%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Diphylleia";
+    font-size: calc(9px + 2vw);
+    color: #FFFFFF;
+    text-shadow: 
+        -1px -1px 0 #000000,
+        1px -1px 0 #000000,
+        -1px 1px 0 #000000,
+        1px 1px 0 #000000,
+        0 0 2px #FFFFFF,
+        0 0 4px #FFFFFF,
+        0 0 6px #FFFFFF;
+}
+
+@media (min-width: 768px) {
+    .text-container.too-long {
+        line-height: 150%;
+    }
+}
+
+@media (min-width: 768px) {
+    .text-container.too-too-long {
+        font-size: calc(9px + 1.25vw);
+        line-height: 150%;
+    }
+}
+
+.section-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.section {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    transition: transform 0.8s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.section.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.section.prev {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+.section.next {
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+#snow-container {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.snow {
+    position: absolute;
+    color: #fff;
+    animation: fall 10s linear infinite, sway 4s ease-in-out infinite;
+}
+
+@keyframes fall {
+    0% {
+        top: -10%;
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        top: 100%;
+        opacity: 0.4;
+    }
+}
+
+@keyframes sway {
+    0% { margin-left: 0; }
+    25% { margin-left: 50px; }
+    50% { margin-left: -50px; }
+    75% { margin-left: 50px; }
+    100% { margin-left: 0; }
+}
+
+.text-container p {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.text-container p.show {
+  animation: fadeInLeft 1s forwards;
+  animation-delay: calc(var(--order) * 0.5s);
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.btn {
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+}
+
+.btn--blue {
+  background-color: #1DA1F2;
+  color: #fff;
+  fill: #fff;
+}
+
+.btn__icon * {
+  display: inline;
+  height: 1rem;
+  width: 1rem;
+}
+
+.btn__text {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#section-navigator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-family: "Cinzel Decorative";
+  font-size: calc(5px + 1vw);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+}
