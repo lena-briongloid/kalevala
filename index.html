@@ -732,28 +732,26 @@
 
     let touchStartY = 0;
     let touchStartX = 0;
-    const MIN_SWIPE_DISTANCE = 20;
-    const SWIPE_TIMEOUT = 300;
+    const MIN_SWIPE_DISTANCE = 30;
 
     window.addEventListener('touchstart', (e) => {
         touchStartY = e.touches[0].clientY;
         touchStartX = e.touches[0].clientX;
     }, { passive: true });
 
-    window.addEventListener('touchmove', (e) => {
-        const touchEndY = e.touches[0].clientY;
-        const touchEndX = e.touches[0].clientX;
-
+    window.addEventListener('touchend', (e) => {
+        const touchEndY = e.changedTouches[0].clientY;
+        const touchEndX = e.changedTouches[0].clientX;
+        
         const horizontalDistance = Math.abs(touchEndX - touchStartX);
         const verticalDistance = Math.abs(touchEndY - touchStartY);
-
+        
         if (verticalDistance > horizontalDistance && verticalDistance > MIN_SWIPE_DISTANCE) {
             if (touchStartY > touchEndY) {
                 requestAnimationFrame(() => changeSection('down'));
             } else {
                 requestAnimationFrame(() => changeSection('up'));
             }
-            touchStartY = touchEndY;
         }
     }, { passive: true });
 
