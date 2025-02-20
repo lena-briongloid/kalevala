@@ -33,6 +33,8 @@
             </div>
         </section>
 
+        <!-- These source codes are under free-license, which means everyone could use it; but the inner texts are under copyrights of 유월공방. -->
+
         <section class="section" id="section_01" data-index="1">
             <div class="blur-background" style="background-image: url('img/bg_01.jpg');"></div>
             <div class="text-container">
@@ -729,23 +731,31 @@
     }, { passive: false });
 
     let touchStartY = 0;
+    let touchStartX = 0;
+    const MIN_SWIPE_DISTANCE = 20;
+    const SWIPE_TIMEOUT = 300;
+
     window.addEventListener('touchstart', (e) => {
         touchStartY = e.touches[0].clientY;
-    });
+        touchStartX = e.touches[0].clientX;
+    }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
-        const currentTime = new Date().getTime();
-        if (currentTime - lastScrollTime > scrollThreshold) {
-            const touchEndY = e.touches[0].clientY;
-            if (touchStartY - touchEndY > 50) {
-                changeSection('down');
-            } else if (touchEndY - touchStartY > 50) {
-                changeSection('up');
+        const touchEndY = e.touches[0].clientY;
+        const touchEndX = e.touches[0].clientX;
+
+        const horizontalDistance = Math.abs(touchEndX - touchStartX);
+        const verticalDistance = Math.abs(touchEndY - touchStartY);
+
+        if (verticalDistance > horizontalDistance && verticalDistance > MIN_SWIPE_DISTANCE) {
+            if (touchStartY > touchEndY) {
+                requestAnimationFrame(() => changeSection('down'));
+            } else {
+                requestAnimationFrame(() => changeSection('up'));
             }
-            lastScrollTime = currentTime;
+            touchStartY = touchEndY;
         }
-        e.preventDefault();
-    }, { passive: false });
+    }, { passive: true });
 
     initSections();
 </script>
